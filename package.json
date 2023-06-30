@@ -1,0 +1,30 @@
+{
+  "name": "mqtt-reader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-Diagram/mqtt-reader.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Team-Diagram/mqtt-reader/issues"
+  },
+  "homepage": "https://github.com/Team-Diagram/mqtt-reader#readme",
+  "dependencies": {
+    "fastify": "^4.18.0",
+    "mqtt": "^4.3.7",
+    "node-fetch": "^3.3.1",
+    "paho-mqtt": "^1.1.0",
+    "process": "^0.11.10",
+    "websocket-polyfill": "^0.0.3"
+  }
+}
