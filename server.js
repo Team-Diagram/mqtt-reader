@@ -14,7 +14,8 @@ fastify.get('/', async function handler (request, reply) {
     data: {"motion": 0},
     event_id: 43
   }
-    sendMessage('adrien-topic', JSON.stringify(messages));
+  messages.nodeId = 'jnefljhnflljn';
+  sendMessage('adrien-topic', JSON.stringify(messages));
 })
 
 try {
