@@ -27,13 +27,9 @@ client.on('message', (topic, message) => {
 function processMessage(message, topic) {
   console.log(topic, ' : Traitement du message : ', message);
   const url = 'http://localhost:8787/sensor';
-  const data = {
-    message: message,
-    topic: topic
-  };
   fetch(url, {
     method: 'POST',
-    body: JSON.stringify(data),
+    body: message,
     headers: { 'Content-Type': 'application/json' }
   })
     .then(response => {
@@ -41,7 +37,7 @@ function processMessage(message, topic) {
         console.log('Message envoyé avec succès à l\'URL :', url);
         return response.json()
       } else {
-        console.error('Erreur lors de l\'envoi du message à l\'URL :', url);
+        console.error('Erreur lors de l\'envoi du message à l\'URL :', url, response);
       }
     })
     .then(data => {
