@@ -1,9 +1,15 @@
 import Fastify from 'fastify'
 import process from "process";
-import {disconnectFromBroker, connectToBroker, sendMessage} from "./mqtt.js"
-const fastify = Fastify({
+import { v4 as uuidv4 } from 'uuid';
+import {sendMessage} from "./mqtt.js";
+const fastify= Fastify({
   logger: true
 })
+
+
+function generateUUID() {
+  return uuidv4();
+}
 
 fastify.get('/', async function handler (request, reply) {
   const messages = {
@@ -14,8 +20,21 @@ fastify.get('/', async function handler (request, reply) {
     data: {"motion": 0},
     event_id: 43
   }
-  messages.node_id = 'a4be12de-12c1-4e29-bd28-7e7e8a1fe765';
-  sendMessage('adrien-topic', JSON.stringify(messages));
+  sendMessage('adrien-topic/a4be12de-12c1-4e29-bd28-7e7e8a1fe765/115', JSON.stringify(messages));
+})
+
+fastify.post('/sensor', (request, reply) => {
+  const data = request.body;
+  const gatewayId = data.gatewayId;
+  const topic = `groupe3/request/${gatewayId}`
+  const message = {
+    cmd_id: generateUUID(),
+    destination_address: data.nodeId,
+    ack_flags: 0,
+    cmd_type: data.cmdType,
+  };
+
+  sendMessage(topic, JSON.stringify(message));
 })
 
 try {

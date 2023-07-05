@@ -1,14 +1,14 @@
 import mqtt from 'mqtt';
 import fetch from 'node-fetch'
 
-const brokerUrl = 'mqtt://test.mosquitto.org';
-const clientId = 'client-adrien';
-const port = 1883;
-const topic = 'adrien-topic'
+const brokerUrl = 'mqtt://mqtt.arcplex.fr';
+const port = 2295;
+const topic = 'groupe3/packet/#';
 
 const client = mqtt.connect(brokerUrl, {
-  clientId,
-  port
+  port,
+  username: 'groupe3',
+  password: '8ae3V7skJoIs',
 });
 
 client.on('connect', () => {
@@ -20,16 +20,20 @@ client.on('connect', () => {
 });
 
 client.on('message', (topic, message) => {
-  const msg = message.toString();
+  const msg = message.toString()
   processMessage(msg, topic);
 });
 
 function processMessage(message, topic) {
-  console.log(topic, ' : Traitement du message : ', message);
   const url = 'http://localhost:8787/sensor';
+  const data = {
+    message: message,
+    topic: topic
+  }
+  console.log(topic, ' : Traitement du message : ', data);
   fetch(url, {
     method: 'POST',
-    body: message,
+    body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' }
   })
     .then(response => {
@@ -37,7 +41,7 @@ function processMessage(message, topic) {
         console.log('Message envoyé avec succès à l\'URL :', url);
         return response.json()
       } else {
-        console.error('Erreur lors de l\'envoi du message à l\'URL :', url, response);
+        console.error('Erreur lors de l\'envoi du message à l\'URL :', url);
       }
     })
     .then(data => {
@@ -48,7 +52,7 @@ function processMessage(message, topic) {
     });
 }
 
-function sendMessage(topic, message) {
+export function sendMessage(topic, message) {
   client.publish(topic, message);
 }
 
@@ -76,12 +80,3 @@ function unsubscribeFromTopic(topic) {
 function disconnectFromBroker() {
   client.end();
 }
-
-export {
-  subscribeToTopic,
-  stopMessageLoop,
-  unsubscribeFromTopic,
-  disconnectFromBroker,
-  connectToBroker,
-  sendMessage,
-};
