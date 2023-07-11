@@ -28,12 +28,14 @@ fastify.post('/sensor', (request, reply) => {
   const gatewayId = data.gatewayId;
   const topic = `groupe3/request/${gatewayId}`
   const message = {
-    cmd_id: generateUUID(),
+    cmd_id: Math.floor(Math.random() * (1000000 - 1)) + 1,
     destination_address: data.nodeId,
     ack_flags: 0,
     cmd_type: data.cmdType,
   };
 
+  console.log(message);
+  reply.code(200).send({ message: 'Message reçu avec succès' });
   sendMessage(topic, JSON.stringify(message));
 })
 
