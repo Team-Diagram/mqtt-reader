@@ -1,5 +1,6 @@
 import mqtt from 'mqtt';
-import fetch from 'node-fetch'
+import fetch from 'node-fetch';
+import config from "config";
 
 const brokerUrl = 'mqtt://mqtt.arcplex.fr';
 const port = 2295;
@@ -25,7 +26,8 @@ client.on('message', (topic, message) => {
 });
 
 function processMessage(message, topic) {
-  const url = 'http://localhost:8787/sensor';
+  const url = config.get('api_symfony');
+  console.log(url);
   const data = {
     message: message,
     topic: topic

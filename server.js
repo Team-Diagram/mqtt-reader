@@ -13,14 +13,12 @@ function generateUUID() {
 
 fastify.get('/', async function handler (request, reply) {
   const messages = {
-    sink_id: "sink1",
-    source_address: 1005865590,
-    sensor_id: 115,
+    source_address: "d3b13593-ea5c-4514-85dc-91f8873fe478",
+    sensor_id: 136,
     tx_time_ms_epoch: 1688397333,
-    data: {"motion": 0},
-    event_id: 43
+    data: {"adc": 1},
   }
-  sendMessage('adrien-topic/a4be12de-12c1-4e29-bd28-7e7e8a1fe765/115', JSON.stringify(messages));
+  sendMessage('groupe3/packet/d3b13593-ea5c-4514-85dc-91f8873fe478/86237e63-89cf-45d3-b61a-dc0c592aee09/136', JSON.stringify(messages));
 })
 
 fastify.post('/sensor', (request, reply) => {

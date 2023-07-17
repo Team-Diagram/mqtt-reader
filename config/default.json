@@ -1,0 +1,3 @@
+{
+  "api_symfony": "http://<IP>:8787/sensor"
+}
