@@ -27,7 +27,6 @@ client.on('message', (topic, message) => {
 
 function processMessage(message, topic) {
   const url = config.get('api_symfony');
-  console.log(url);
   const data = {
     message: message,
     topic: topic
@@ -63,22 +62,3 @@ client.on('error', (error) => {
   client.reconnect();
 });
 
-function connectToBroker() {
-  client.reconnect();
-}
-
-function subscribeToTopic(topic) {
-  client.subscribe(topic);
-}
-
-function stopMessageLoop() {
-  client.removeAllListeners('message');
-}
-
-function unsubscribeFromTopic(topic) {
-  client.unsubscribe(topic);
-}
-
-function disconnectFromBroker() {
-  client.end();
-}

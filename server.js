@@ -1,15 +1,9 @@
 import Fastify from 'fastify'
 import process from "process";
-import { v4 as uuidv4 } from 'uuid';
 import {sendMessage} from "./mqtt.js";
 const fastify= Fastify({
   logger: true
 })
-
-
-function generateUUID() {
-  return uuidv4();
-}
 
 fastify.get('/', async function handler (request, reply) {
   const messages = {
