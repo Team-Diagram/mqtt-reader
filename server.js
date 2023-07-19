@@ -31,11 +31,9 @@ fastify.post('/sensor', (request, reply) => {
   sendMessage(topic, JSON.stringify(message));
 })
 
-const port = 8585;
-
-fastify.listen(port, (err) => {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-});
+try {
+  await fastify.listen({ port: 8585 });
+} catch (err) {
+  fastify.log.error(err)
+  process.exit(1)
+}
